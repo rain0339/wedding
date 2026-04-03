@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rain Deng × Seulki Kim · Wedding Invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+SC:wght@300;400&family=Noto+Serif+KR:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blush:    #F5E6E0;
+  --rose:     #D4A5A0;
+  --deep-rose:#A0696A;
+  --petal:    #EDD5CE;
+  --sage:     #B8C4B8;
+  --ivory:    #FDFAF7;
+  --linen:    #F7F0EA;
+  --ink:      #3A2E2E;
+  --mist:     #8FA39A;
+  --gold:     #C9B99A;
+  --gold-l:   #E8DDD0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  background: var(--blush);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+  font-family: 'Cormorant Garamond', 'Noto Serif SC', 'Noto Serif KR', serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Subtle grain overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.6;
+}
+
+/* Floral background blobs */
+.bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+.bg-blob-1 { width: 600px; height: 600px; background: rgba(212,165,160,0.22); top: -100px; left: -150px; }
+.bg-blob-2 { width: 500px; height: 500px; background: rgba(184,196,184,0.18); bottom: 0; right: -100px; }
+.bg-blob-3 { width: 350px; height: 350px; background: rgba(237,213,206,0.28); top: 40%; left: 50%; transform: translateX(-50%); }
+
+/* === CARD === */
+.card {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 700px;
+  margin: 0 auto;
+  background: var(--ivory);
+  box-shadow:
+    0 2px 4px rgba(58,46,46,0.04),
+    0 8px 32px rgba(58,46,46,0.08),
+    0 40px 100px rgba(58,46,46,0.12);
+  animation: cardIn 1.4s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(60px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === HERO === */
+.hero {
+  position: relative;
+  background: linear-gradient(180deg, #C8DCE8 0%, #D9EAF2 30%, #EAD4CC 65%, #E8CBC2 100%);
+  padding: 80px 60px 64px;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Ocean canvas sits at bottom of hero */
+#oceanCanvas {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 200px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Sun glow */
+.sun {
+  position: absolute;
+  top: 36px; left: 50%;
+  transform: translateX(-50%);
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,220,170,1) 0%, rgba(255,190,120,0.7) 40%, transparent 70%);
+  filter: blur(6px);
+  animation: sunPulse 4s ease-in-out infinite alternate;
+  z-index: 0;
+}
+.sun-core {
+  position: absolute;
+  top: 52px; left: 50%;
+  transform: translateX(-50%);
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFF5D0, #FFD580);
+  z-index: 1;
+}
+@keyframes sunPulse {
+  from { opacity: 0.8; transform: translateX(-50%) scale(1); }
+  to   { opacity: 1;   transform: translateX(-50%) scale(1.12); }
+}
+
+/* Hero content must sit above canvas */
+.hero > *:not(canvas):not(.botanical):not(.sun):not(.sun-core) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Botanical SVG illustrations */
+.botanical {
+  position: absolute;
+  opacity: 0.18;
+  pointer-events: none;
+}
+.botanical-tl {
+  top: -20px; left: -30px;
+  width: 260px;
+  transform: rotate(-15deg);
+  animation: swayL 8s ease-in-out infinite alternate;
+}
+.botanical-br {
+  bottom: 180px; right: -30px;
+  width: 260px;
+  transform: rotate(165deg) scaleX(-1);
+  animation: swayR 10s ease-in-out infinite alternate-reverse;
+}
+.botanical-tr {
+  top: 0; right: -10px;
+  width: 160px;
+  transform: rotate(20deg) scaleX(-1);
+  opacity: 0.1;
+  animation: swayL 9s ease-in-out infinite alternate;
+}
+
+@keyframes swayL {
+  from { transform: rotate(-15deg) translateX(0); }
+  to   { transform: rotate(-12deg) translateX(6px); }
+}
+@keyframes swayR {
+  from { transform: rotate(165deg) scaleX(-1) translateX(0); }
+  to   { transform: rotate(162deg) scaleX(-1) translateX(6px); }
+}
+
+.hero-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 6px;
+  color: var(--deep-rose);
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  margin-top: 70px;
+  animation: fadeUp 1s ease 0.3s both;
+}
+
+.names-block {
+  animation: fadeUp 1s ease 0.5s both;
+  margin-bottom: 36px;
+}
+
+.name-cn-kr {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--deep-rose);
+  letter-spacing: 6px;
+  margin-bottom: 6px;
+}
+
+.name-en {
+  font-family: 'Great Vibes', cursive;
+  font-size: 76px;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: 2px;
+}
+
+.name-separator {
+  display: inline-block;
+  color: var(--rose);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 42px;
+  margin: 0 8px;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.hero-flourish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 28px 0;
+  animation: fadeUp 1s ease 0.7s both;
+}
+.flourish-line {
+  flex: 1; max-width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rose));
+}
+.flourish-line.right { background: linear-gradient(90deg, var(--rose), transparent); }
+.flourish-center {
+  font-size: 18px;
+  color: var(--rose);
+}
+
+.date-display {
+  animation: fadeUp 1s ease 0.85s both;
+}
+.date-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 5px;
+  color: var(--ink);
+  opacity: 0.7;
+}
+.date-time {
+  font-family: 'Great Vibes', cursive;
+  font-size: 32px;
+  color: var(--deep-rose);
+  margin-top: 6px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === DIVIDER WAVE === */
+.wave-divider {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  background: var(--ivory);
+}
+.wave-divider svg { display: block; width: 100%; }
+
+/* === BODY SECTIONS === */
+.body-section {
+  padding: 56px 72px;
+  position: relative;
+}
+
+@media (max-width: 560px) {
+  .hero { padding: 60px 28px 52px; }
+  .name-en { font-size: 52px; }
+  .body-section { padding: 40px 28px; }
+}
+
+/* Trilingual message */
+.trilingual-block {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0 32px;
+  align-items: start;
+  margin-bottom: 52px;
+  animation: fadeUp 1s ease 0.2s both;
+}
+.lang-divider-v {
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  align-self: stretch;
+}
+.lang-col { text-align: center; }
+.lang-label {
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: block;
+}
+.message-text {
+  font-size: 14.5px;
+  line-height: 2.2;
+  color: var(--ink);
+  font-weight: 300;
+  opacity: 0.85;
+}
+.message-text-cn { font-family: 'Noto Serif SC', serif; font-size: 14px; }
+.message-text-kr { font-family: 'Noto Serif KR', serif; font-size: 13px; }
+
+/* Paragraph alignment */
+.msg-para {
+  display: block;
+  margin-bottom: 1.8em;
+}
+.msg-para:last-child { margin-bottom: 0; }
+
+/* English quote center */
+.en-quote-center {
+  text-align: center;
+  margin-bottom: 52px;
+  padding: 0 20px;
+  animation: fadeUp 1s ease 0.4s both;
+}
+.en-quote-center .message-text {
+  font-style: italic;
+  font-size: 17px;
+  line-height: 2;
+  color: var(--deep-rose);
+  opacity: 1;
+}
+
+/* Details card */
+.details-wrapper {
+  background: linear-gradient(160deg, #FDF8F5 0%, #F7EEE9 100%);
+  border: 1px solid var(--gold-l);
+  padding: 44px 48px;
+  position: relative;
+  margin-bottom: 48px;
+  animation: fadeUp 1s ease 0.5s both;
+}
+.details-wrapper::before,
+.details-wrapper::after {
+  content: '✦';
+  position: absolute;
+  color: var(--rose);
+  font-size: 14px;
+  opacity: 0.5;
+}
+.details-wrapper::before { top: 14px; left: 14px; }
+.details-wrapper::after { bottom: 14px; right: 14px; }
+
+.details-title {
+  text-align: center;
+  font-family: 'Great Vibes', cursive;
+  font-size: 36px;
+  color: var(--deep-rose);
+  margin-bottom: 36px;
+}
+
+.detail-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(201,185,154,0.2);
+  gap: 10px;
+}
+.detail-row:last-child { border-bottom: none; }
+
+.detail-icon {
+  width: 44px; height: 44px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--blush), #F0DDD8);
+  border: 1px solid var(--gold-l);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 2px 12px rgba(160,105,106,0.12);
+}
+
+.detail-content { flex: 1; width: 100%; }
+
+.detail-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 6px;
+}
+.detail-cn-kr {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--mist);
+  letter-spacing: 1px;
+  display: block;
+  line-height: 2;
+}
+.detail-cn-kr span { font-family: 'Noto Serif KR', serif; }
+
+/* RSVP */
+.rsvp-section {
+  text-align: center;
+  animation: fadeUp 1s ease 0.6s both;
+}
+.rsvp-label {
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.rsvp-name {
+  font-family: 'Great Vibes', cursive;
+  font-size: 28px;
+  color: var(--deep-rose);
+  margin-bottom: 6px;
+}
+.rsvp-detail {
+  font-size: 13px;
+  color: var(--ink);
+  opacity: 0.6;
+  letter-spacing: 2px;
+  line-height: 2;
+}
+
+/* Footer */
+.footer {
+  background: linear-gradient(160deg, #EDD8D2 0%, #D8C5C0 100%);
+  padding: 40px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.footer-botanical {
+  position: absolute;
+  opacity: 0.12;
+  bottom: -10px; left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+}
+.footer-text {
+  font-family: 'Great Vibes', cursive;
+  font-size: 22px;
+  color: var(--ink);
+  opacity: 0.75;
+  position: relative; z-index: 1;
+  letter-spacing: 1px;
+}
+.footer-sub {
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--deep-rose);
+  text-transform: uppercase;
+  margin-top: 8px;
+  position: relative; z-index: 1;
+}
+
+/* Floating petals */
+.petal-canvas {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 50;
+  overflow: hidden;
+}
+.fp {
+  position: absolute;
+  opacity: 0;
+  animation: petalFall linear infinite;
+  will-change: transform;
+}
+@keyframes petalFall {
+  0%   { opacity: 0; transform: translateY(-20px) rotate(0deg) scale(0.8); }
+  8%   { opacity: 0.6; }
+  92%  { opacity: 0.4; }
+  100% { opacity: 0; transform: translateY(110vh) rotate(540deg) scale(1); }
+}
+
+/* ===  SECTION SEPARATOR === */
+.sep {
+  display: flex; align-items: center; justify-content: center;
+  gap: 14px; margin: 8px 0 40px;
+}
+.sep-line { flex: 1; max-width: 80px; height: 1px; background: var(--gold-l); }
+.sep-icon { font-size: 13px; color: var(--rose); }
+
+/* Countdown */
+.countdown-section {
+  text-align: center;
+  margin: 0 0 48px;
+  padding: 36px 24px;
+  background: linear-gradient(135deg, rgba(212,165,160,0.08), rgba(201,185,154,0.1));
+  border: 1px solid var(--gold-l);
+  position: relative;
+  animation: fadeUp 1s ease 0.6s both;
+}
+.countdown-section::before,
+.countdown-section::after {
+  content: '✦';
+  position: absolute;
+  color: var(--rose);
+  font-size: 12px;
+  opacity: 0.4;
+}
+.countdown-section::before { top: 12px; left: 12px; }
+.countdown-section::after { bottom: 12px; right: 12px; }
+.countdown-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--mist);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+.countdown-blocks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.countdown-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 58px;
+}
+.countdown-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 300;
+  color: var(--deep-rose);
+  line-height: 1;
+  display: block;
+}
+.countdown-unit {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--mist);
+  margin-top: 6px;
+  display: block;
+}
+.countdown-sep {
+  font-size: 28px;
+  color: var(--rose);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+SC:wght@300;400&family=Noto+Serif+KR:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#C8DCE8">
+<meta name="format-detection" content="telephone=no">
+<style id="mobile-touch">
+* { -webkit-tap-highlight-color: transparent; }
+body { -webkit-text-size-adjust: 100%; }
+.card { border-radius: 0; }
+@media (max-width: 430px) {
+  .hero { padding: 50px 20px 52px; }
+  .name-en { font-size: 44px; }
+  .body-section { padding: 36px 22px; }
+  .details-wrapper { padding: 32px 24px; }
+  .trilingual-block { gap: 0 18px; }
+  .message-text { font-size: 13px; line-height: 2; }
+  .message-text-kr { font-size: 12px; }
+  .countdown-num { font-size: 32px; }
+  .countdown-block { min-width: 46px; }
+  .countdown-unit { font-size: 8px; letter-spacing: 0; }
+  .countdown-sep { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-blob bg-blob-1"></div>
+<div class="bg-blob bg-blob-2"></div>
+<div class="bg-blob bg-blob-3"></div>
+
+<!-- Floating petals -->
+<div class="petal-canvas" id="petalCanvas"></div>
+
+<div class="card">
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+
+    <!-- Sun -->
+    <div class="sun"></div>
+    <div class="sun-core"></div>
+
+    <!-- Animated ocean canvas -->
+    <canvas id="oceanCanvas"></canvas>
+
+    <!-- Botanical SVGs -->
+    <svg class="botanical botanical-tl" viewBox="0 0 300 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M60 280 C60 200 140 180 160 100" stroke="#A0696A" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="80" cy="240" rx="32" ry="18" fill="#D4A5A0" transform="rotate(-30 80 240)"/>
+      <ellipse cx="110" cy="200" rx="28" ry="16" fill="#EDD5CE" transform="rotate(-45 110 200)"/>
+      <ellipse cx="140" cy="160" rx="30" ry="17" fill="#D4A5A0" transform="rotate(-60 140 160)"/>
+      <ellipse cx="155" cy="120" rx="24" ry="14" fill="#EDD5CE" transform="rotate(-20 155 120)"/>
+      <circle cx="160" cy="95" r="14" fill="#D4A5A0" opacity="0.8"/>
+      <circle cx="160" cy="95" r="7" fill="#A0696A" opacity="0.6"/>
+      <ellipse cx="45" cy="260" rx="20" ry="12" fill="#B8C4B8" transform="rotate(20 45 260)"/>
+      <path d="M50 270 C30 250 20 220 40 200" stroke="#B8C4B8" stroke-width="1.5" fill="none"/>
+      <path d="M120 180 C100 170 80 175 70 190" stroke="#B8C4B8" stroke-width="1.5" fill="none"/>
+      <ellipse cx="72" cy="188" rx="18" ry="10" fill="#B8C4B8" transform="rotate(-50 72 188)"/>
+    </svg>
+
+    <svg class="botanical botanical-br" viewBox="0 0 300 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M60 280 C60 200 140 180 160 100" stroke="#A0696A" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="80" cy="240" rx="32" ry="18" fill="#D4A5A0" transform="rotate(-30 80 240)"/>
+      <ellipse cx="110" cy="200" rx="28" ry="16" fill="#EDD5CE" transform="rotate(-45 110 200)"/>
+      <ellipse cx="140" cy="160" rx="30" ry="17" fill="#D4A5A0" transform="rotate(-60 140 160)"/>
+      <ellipse cx="155" cy="120" rx="24" ry="14" fill="#EDD5CE" transform="rotate(-20 155 120)"/>
+      <circle cx="160" cy="95" r="14" fill="#D4A5A0" opacity="0.8"/>
+      <circle cx="160" cy="95" r="7" fill="#A0696A" opacity="0.6"/>
+      <ellipse cx="45" cy="260" rx="20" ry="12" fill="#B8C4B8" transform="rotate(20 45 260)"/>
+    </svg>
+
+    <div class="hero-eyebrow">Together · 함께 · 相伴</div>
+
+    <div class="names-block">
+      <div class="name-cn-kr">邓雨 &nbsp;&nbsp;×&nbsp;&nbsp; 김슬기</div>
+      <div class="name-en">
+        Rain<span class="name-separator">×</span>Seulki
+      </div>
+    </div>
+
+    <div class="hero-flourish">
+      <div class="flourish-line"></div>
+      <div class="flourish-center">✦ ✦ ✦</div>
+      <div class="flourish-line right"></div>
+    </div>
+
+    <div class="date-display">
+    </div>
+  </div>
+
+  <!-- Wave transition -->
+  <div class="wave-divider" style="background:linear-gradient(180deg,#D4C8BE 0%,#C8B8B0 100%)">
+    <svg viewBox="0 0 700 48" preserveAspectRatio="none" height="48">
+      <path d="M0,48 C175,0 525,48 700,0 L700,48 Z" fill="#FDFAF7"/>
+    </svg>
+  </div>
+
+  <!-- ===== BODY ===== -->
+  <div class="body-section">
+
+    <!-- Trilingual message -->
+    <div class="trilingual-block">
+      <div class="lang-col">
+        <span class="lang-label">中文</span>
+        <p class="message-text message-text-cn">
+          在海风与阳光<br>交汇的那一刻，<br>我们诚挚邀请您<br>共同见证这份喜悦。<br><br>
+          若能得您亲临，<br>以您的祝福相伴，<br>携手迈向新旅程，<br>将是我们最大的幸福。
+        </p>
+      </div>
+      <div class="lang-divider-v"></div>
+      <div class="lang-col">
+        <span class="lang-label">한국어</span>
+        <p class="message-text message-text-kr">
+          사랑으로 하나 되는 날,<br>소중한 분들을 모시고<br>기쁨의 순간을<br>함께 나누고자 합니다.<br>&#8203;<br><br>
+          저희 두 사람이<br>새로운 시작을 내딛는 자리에<br>귀한 걸음으로 함께해 주시면<br>더없는 기쁨이겠습니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="sep">
+      <div class="sep-line"></div>
+      <span class="sep-icon">🌸</span>
+      <div class="sep-line"></div>
+    </div>
+
+    <!-- English center -->
+    <div class="en-quote-center">
+      <p class="message-text">
+        At this meaningful moment,<br>
+        we choose to walk into a new chapter of life together.<br><br>
+        May this meaningful beginning<br>
+        be made complete by your presence.<br><br>
+        We look forward to sharing this day with you.
+      </p>
+    </div>
+
+    <!-- Details -->
+    <div class="details-wrapper">
+      <div class="details-title">Details</div>
+
+      <div class="detail-row">
+        <div class="detail-icon">📅</div>
+        <div class="detail-content">
+          <span class="detail-en">Saturday, May 16, 2026</span>
+          <span class="detail-cn-kr">2026年5月16日 &nbsp;·&nbsp; <span>2026년 5월 16일</span></span>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-icon">🕐</div>
+        <div class="detail-content">
+          <span class="detail-en">5 : 00 PM — Ceremony begins</span>
+          <span class="detail-cn-kr">下午 17时00分 起 &nbsp;·&nbsp; <span>오후 5시 00분 시작</span></span>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <div class="detail-icon">📍</div>
+        <div class="detail-content">
+          <span class="detail-en">Silver Beach Business Club, Building 5, Qingdao, China</span>
+          <span class="detail-cn-kr">
+            中国 · 青岛 · 银沙滩商务会馆 · 5号楼<br>
+            <span>중국 · 칭다오 · 은사탄 비즈니스 클럽 · 5호동</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown-section">
+      <div class="countdown-label">距婚礼还有 · D-DAY · 결혼식까지</div>
+      <div class="countdown-blocks">
+        <div class="countdown-block">
+          <span class="countdown-num" id="cd-days">--</span>
+          <span class="countdown-unit">天 / Days / 일</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-block">
+          <span class="countdown-num" id="cd-hours">--</span>
+          <span class="countdown-unit">时 / Hrs / 시</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-block">
+          <span class="countdown-num" id="cd-mins">--</span>
+          <span class="countdown-unit">分 / Min / 분</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-block">
+          <span class="countdown-num" id="cd-secs">--</span>
+          <span class="countdown-unit">秒 / Sec / 초</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RSVP -->
+    <div class="rsvp-section">
+      <div class="rsvp-label">R · S · V · P</div>
+      <div class="rsvp-name">Rain &amp; Seulki</div>
+      <div class="rsvp-detail">
+        请于婚礼前告知是否出席<br>
+        <span style="font-family:'Noto Serif KR',serif">참석 여부를 미리 알려주세요</span><br>
+        Kindly reply at your earliest convenience
+      </div>
+    </div>
+
+    <!-- No Smoking Notice -->
+    <div style="
+      text-align:center;
+      margin-top: 36px;
+      padding: 12px 24px;
+    ">
+      <div style="font-size:11px; letter-spacing:3px; color:var(--mist); opacity:0.7;">
+        🚭 &nbsp; 婚礼上请勿吸烟 · 금연 · No Smoking
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div class="footer">
+    <svg class="footer-botanical" viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="60" cy="60" rx="50" ry="25" fill="#D4A5A0" transform="rotate(-10 60 60)"/>
+      <ellipse cx="150" cy="50" rx="55" ry="28" fill="#EDD5CE" transform="rotate(5 150 50)"/>
+      <ellipse cx="240" cy="60" rx="50" ry="25" fill="#D4A5A0" transform="rotate(10 240 60)"/>
+      <circle cx="150" cy="30" r="18" fill="#D4A5A0"/>
+      <circle cx="150" cy="30" r="9" fill="#A0696A" opacity="0.7"/>
+    </svg>
+    <div class="footer-text">With love, Rain &amp; Seulki</div>
+    <div class="footer-sub">邓雨 · 김슬기 · 2026</div>
+  </div>
+
+</div>
+
+<script>
+// ===== COUNTDOWN =====
+(function() {
+  const wedding = new Date('2026-05-16T17:00:00+08:00');
+  function update() {
+    const now = new Date();
+    const diff = wedding - now;
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent = '0';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent = '00';
+      document.getElementById('cd-secs').textContent = '00';
+      return;
+    }
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000) / 60000);
+    const secs  = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent  = days;
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(secs).padStart(2,'0');
+  }
+  update();
+  setInterval(update, 1000);
+})();
+(function() {
+  const canvas = document.getElementById('oceanCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, t = 0;
+  let seagulls = [];
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = canvas.width  = rect.width  * window.devicePixelRatio;
+    H = canvas.height = 200        * window.devicePixelRatio;
+    canvas.style.width  = rect.width + 'px';
+    canvas.style.height = '200px';
+  }
+
+  // Init seagulls
+  function initGulls() {
+    seagulls = Array.from({length: 6}, (_, i) => ({
+      x: 0.1 + Math.random() * 0.8,
+      y: 0.05 + Math.random() * 0.3,
+      speed: 0.0003 + Math.random() * 0.0003,
+      size: 4 + Math.random() * 6,
+      phase: Math.random() * Math.PI * 2,
+      flap: Math.random() * Math.PI * 2,
+    }));
+  }
+
+  function drawWave(yBase, amp, period, phaseOffset, color) {
+    ctx.beginPath();
+    ctx.moveTo(0, H);
+    for (let x = 0; x <= W; x += 3) {
+      const xr = x / W;
+      const y = yBase
+        + Math.sin(xr * period + t + phaseOffset) * amp
+        + Math.sin(xr * period * 0.6 + t * 1.3 + phaseOffset) * amp * 0.4;
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.lineTo(W, H);
+    ctx.lineTo(0, H);
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
+  function drawFoam(yBase, amp, period, phaseOffset) {
+    ctx.save();
+    ctx.globalAlpha = 0.35;
+    for (let x = 0; x <= W; x += W / 18) {
+      const xr = x / W;
+      const y = yBase
+        + Math.sin(xr * period + t + phaseOffset) * amp
+        + Math.sin(xr * period * 0.6 + t * 1.3 + phaseOffset) * amp * 0.4;
+      ctx.beginPath();
+      ctx.ellipse(x, y, 14 * window.devicePixelRatio, 3.5 * window.devicePixelRatio, 0, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawSeagull(x, y, size, flapPhase) {
+    const flap = Math.sin(flapPhase) * 0.4; // wing angle
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.strokeStyle = 'rgba(80,100,120,0.55)';
+    ctx.lineWidth = 1.5 * window.devicePixelRatio;
+    ctx.lineCap = 'round';
+    // left wing
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo(-size * 0.5, -size * flap, -size, size * 0.1);
+    ctx.stroke();
+    // right wing
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo( size * 0.5, -size * flap,  size, size * 0.1);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Sun light reflection on water
+  function drawSunPath() {
+    const grd = ctx.createLinearGradient(W * 0.5, H * 0.05, W * 0.5, H * 0.55);
+    grd.addColorStop(0, 'rgba(255,230,160,0.28)');
+    grd.addColorStop(1, 'rgba(255,230,160,0)');
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.ellipse(W * 0.5, H * 0.2, W * 0.08, H * 0.5, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function frame() {
+    t += 0.012;
+    ctx.clearRect(0, 0, W, H);
+
+    // Sky-to-sea gradient base
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, 'rgba(200,220,235,0)');
+    sky.addColorStop(0.4, 'rgba(180,210,230,0.1)');
+    sky.addColorStop(1, 'rgba(150,190,220,0.18)');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    const dpr = window.devicePixelRatio;
+    const base = H * 0.38;
+    const amp  = 10 * dpr;
+
+    // Waves back to front
+    drawWave(base - 20*dpr,  amp*0.7, 4.2, 0.0,  'rgba(135,175,205,0.45)');
+    drawWave(base - 5*dpr,   amp*0.9, 3.8, 0.8,  'rgba(155,195,215,0.50)');
+    drawWave(base + 10*dpr,  amp,     3.4, 1.6,  'rgba(175,210,225,0.55)');
+    drawWave(base + 22*dpr,  amp*1.1, 3.0, 2.4,  'rgba(195,220,230,0.60)');
+
+    // Foam caps
+    drawFoam(base + 10*dpr, amp, 3.4, 1.6);
+    drawFoam(base + 22*dpr, amp*1.1, 3.0, 2.4);
+
+    // Beach sand at very bottom
+    const sand = ctx.createLinearGradient(0, H * 0.82, 0, H);
+    sand.addColorStop(0, 'rgba(230,210,185,0.0)');
+    sand.addColorStop(0.3, 'rgba(230,210,185,0.55)');
+    sand.addColorStop(1,   'rgba(215,195,168,0.85)');
+    ctx.fillStyle = sand;
+    ctx.beginPath();
+    ctx.ellipse(W*0.5, H*1.05, W*0.75, H*0.32, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    // Sun path shimmer
+    drawSunPath();
+
+    // Seagulls
+    seagulls.forEach(g => {
+      g.x += g.speed;
+      if (g.x > 1.1) g.x = -0.1;
+      g.flap += 0.08 + g.speed * 50;
+      const gx = g.x * W;
+      const gy = g.y * H + Math.sin(g.phase + t * 0.5) * 4 * dpr;
+      drawSeagull(gx, gy, g.size * dpr, g.flap);
+    });
+
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  initGulls();
+  frame();
+})();
+
+// Floating petals
+const canvas = document.getElementById('petalCanvas');
+const svgPetals = [
+  `<svg viewBox="0 0 20 24" xmlns="http://www.w3.org/2000/svg"><ellipse cx="10" cy="12" rx="7" ry="11" fill="#EDD5CE" opacity="0.7"/></svg>`,
+  `<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><ellipse cx="10" cy="10" rx="8" ry="9" fill="#D4A5A0" opacity="0.6"/></svg>`,
+  `<svg viewBox="0 0 18 22" xmlns="http://www.w3.org/2000/svg"><ellipse cx="9" cy="11" rx="6" ry="10" fill="#F5E6E0" opacity="0.8"/></svg>`,
+  `<svg viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg"><ellipse cx="8" cy="10" rx="5" ry="9" fill="#B8C4B8" opacity="0.5"/></svg>`,
+];
+
+function spawnPetal() {
+  const el = document.createElement('div');
+  el.className = 'fp';
+  const size = 12 + Math.random() * 20;
+  el.style.cssText = `
+    left:${Math.random()*100}vw;
+    width:${size}px; height:${size*1.2}px;
+    animation-duration:${9+Math.random()*10}s;
+    animation-delay:${Math.random()*3}s;
+  `;
+  el.innerHTML = svgPetals[Math.floor(Math.random()*svgPetals.length)];
+  canvas.appendChild(el);
+  setTimeout(() => el.remove(), 22000);
+}
+
+for (let i = 0; i < 8; i++) setTimeout(spawnPetal, i * 400);
+setInterval(spawnPetal, 1200);
+
+// Intersection observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.trilingual-block, .en-quote-center, .details-wrapper, .rsvp-section').forEach(el => {
+  el.style.animationPlayState = 'paused';
+  observer.observe(el);
+});
+</script>
+
+<!-- ===== MUSIC PLAYER ===== -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Floating music button -->
+<div id="musicBtn" style="
+  position: fixed;
+  bottom: 32px; right: 24px;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #D4A5A0, #A0696A);
+  box-shadow: 0 4px 20px rgba(160,105,106,0.45);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+" title="播放/暂停音乐">
+  <svg id="musicIcon" viewBox="0 0 24 24" fill="white" width="20" height="20">
+    <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+  </svg>
+</div>
+
+<!-- Rotating vinyl ring animation -->
+<style>
+#musicBtn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(160,105,106,0.6); }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.music-playing { animation: spin 4s linear infinite; }
+</style>
+
+<script>
+(function() {
+  const audio = document.getElementById('bgMusic');
+  const btn   = document.getElementById('musicBtn');
+  const icon  = document.getElementById('musicIcon');
+
+  // Use a royalty-free piano version suitable for wedding
+  // "You Are My Sunshine" - gentle instrumental
+  audio.src = 'George Benson - Nothings Gonna Change My Love For You.mp3';
+
+  const playIcon = `<path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>`;
+  const pauseIcon = `<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>`;
+
+  function setPlaying(playing) {
+    icon.innerHTML = playing ? pauseIcon : playIcon;
+    if (playing) btn.classList.add('music-playing');
+    else btn.classList.remove('music-playing');
+  }
+
+  // Auto-play on first user interaction (browser policy)
+  let started = false;
+  function tryPlay() {
+    if (started) return;
+    started = true;
+    audio.volume = 0;
+    audio.play().then(() => {
+      setPlaying(true);
+      // Fade in
+      let v = 0;
+      const fade = setInterval(() => {
+        v = Math.min(v + 0.02, 0.55);
+        audio.volume = v;
+        if (v >= 0.55) clearInterval(fade);
+      }, 80);
+    }).catch(() => { started = false; });
+  }
+
+  // Try autoplay immediately
+  document.addEventListener('DOMContentLoaded', () => {
+    audio.play().then(() => {
+      started = true;
+      setPlaying(true);
+      audio.volume = 0;
+      let v = 0;
+      const fade = setInterval(() => {
+        v = Math.min(v + 0.02, 0.55);
+        audio.volume = v;
+        if (v >= 0.55) clearInterval(fade);
+      }, 80);
+    }).catch(() => {
+      // Autoplay blocked — wait for first touch/click
+      document.addEventListener('touchstart', tryPlay, { once: true });
+      document.addEventListener('click', tryPlay, { once: true });
+    });
+  });
+
+  // Toggle on button click
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (audio.paused) {
+      audio.play();
+      setPlaying(true);
+    } else {
+      audio.pause();
+      setPlaying(false);
+    }
+  });
+})();
+
+// ===== ENVELOPE SPLASH =====
+window.addEventListener('load', function() {
+  const envelope = document.getElementById('envelope');
+  const flap     = document.getElementById('envFlap');
+  const seal     = document.getElementById('envSeal');
+  const letter   = document.getElementById('envLetter');
+  const content  = document.getElementById('letterContent');
+  const splash   = document.getElementById('splash');
+
+  let opened = false;
+
+  envelope.addEventListener('click', function() {
+    if (opened) return;
+    opened = true;
+
+    // 破蜡封
+    seal.classList.add('break');
+    // 翻盖
+    setTimeout(() => { flap.classList.add('open'); }, 300);
+    // 信纸升起
+    setTimeout(() => { letter.classList.add('rise'); }, 800);
+    // 显示内容
+    setTimeout(() => { content.classList.add('show'); }, 1100);
+
+    // 播放音乐
+    const audio = document.getElementById('bgMusic');
+    const btn   = document.getElementById('musicBtn');
+    const icon  = document.getElementById('musicIcon');
+    const pauseIcon = `<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>`;
+    audio.volume = 0;
+    audio.play().then(() => {
+      icon.innerHTML = pauseIcon;
+      btn.classList.add('music-playing');
+      let v = 0;
+      const fade = setInterval(() => {
+        v = Math.min(v + 0.02, 0.55);
+        audio.volume = v;
+        if (v >= 0.55) clearInterval(fade);
+      }, 80);
+    }).catch(() => {});
+
+    // 动画结束后淡出进入邀请函
+    setTimeout(() => {
+      splash.style.opacity = '0';
+      setTimeout(() => { splash.style.display = 'none'; }, 800);
+    }, 1800);
+  });
+});
+</script>
+<!-- ===== ENVELOPE SPLASH ===== -->
+<style>
+.envelope-wrap {
+  position: fixed; inset: 0; z-index: 9999;
+  background: linear-gradient(160deg, #EDD8D2 0%, #D8C5C0 50%, #C8DCE8 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  transition: opacity 1s ease;
+}
+
+.envelope {
+  position: relative;
+  width: 340px;
+  height: 240px;
+  cursor: pointer;
+  perspective: 800px;
+}
+
+/* Envelope body */
+.env-body {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #FDF6F0, #F5E8E0);
+  border: 1px solid #D4A5A0;
+  border-radius: 2px;
+  box-shadow: 0 8px 40px rgba(160,105,106,0.2), 0 2px 8px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+/* Bottom triangle */
+.env-body::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 0;
+  border-left: 170px solid transparent;
+  border-right: 170px solid transparent;
+  border-bottom: 135px solid #EDD5CE;
+}
+
+/* Side triangles */
+.env-body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, #E8C8C0 0%, transparent 50%),
+    linear-gradient(225deg, #E8C8C0 0%, transparent 50%);
+}
+
+/* Flap */
+.env-flap {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 0;
+  border-left: 170px solid transparent;
+  border-right: 170px solid transparent;
+  border-top: 135px solid #D4A5A0;
+  transform-origin: top center;
+  transform: rotateX(0deg);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;
+  filter: drop-shadow(0 4px 8px rgba(160,105,106,0.2));
+}
+.env-flap.open {
+  transform: rotateX(-180deg);
+}
+
+/* Wax seal */
+.env-seal {
+  position: absolute;
+  bottom: 16px; left: 50%;
+  transform: translateX(-50%);
+  width: 44px; height: 44px;
+  background: radial-gradient(circle, #C0696A, #8B3A3A);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 2px 12px rgba(139,58,58,0.4);
+  z-index: 4;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.env-seal.break {
+  opacity: 0;
+  transform: translateX(-50%) scale(1.3);
+}
+
+/* Letter inside */
+.env-letter {
+  position: absolute;
+  bottom: 8px; left: 16px; right: 16px;
+  height: 200px;
+  background: #FDFAF7;
+  border: 1px solid #E8DDD0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 16px;
+  transform: translateY(0px);
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+}
+.env-letter.rise {
+  transform: translateY(-140px);
+}
+
+.letter-content {
+  opacity: 0;
+  transition: opacity 0.5s ease 0.6s;
+}
+.letter-content.show { opacity: 1; }
+
+.letter-name {
+  font-family: 'Great Vibes', cursive;
+  font-size: 32px;
+  color: #3A2E2E;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.letter-sub {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #8FA39A;
+  margin-bottom: 12px;
+}
+.letter-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  color: #A0696A;
+  letter-spacing: 3px;
+}
+
+/* Enter hint */
+.env-hint {
+  margin-top: 32px;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: #A0696A;
+  font-family: 'Cormorant Garamond', serif;
+  opacity: 0;
+  animation: hintPulse 1.5s ease 1s infinite alternate;
+}
+@keyframes hintPulse {
+  from { opacity: 0.4; }
+  to   { opacity: 1; }
+}
+
+.env-enter-btn {
+  margin-top: 24px;
+  padding: 12px 36px;
+  border: 1px solid #D4A5A0;
+  background: rgba(255,255,255,0.6);
+  color: #A0696A;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  letter-spacing: 4px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease;
+  display: none;
+}
+.env-enter-btn.show {
+  opacity: 1;
+  transform: translateY(0);
+  display: block;
+}
+</style>
+
+<div class="envelope-wrap" id="splash">
+  <div class="envelope" id="envelope">
+    <div class="env-body"></div>
+    <div class="env-letter" id="envLetter">
+      <div class="letter-content" id="letterContent">
+        <div class="letter-name">Rain × Seulki</div>
+        <div class="letter-sub">邓雨 · 김슬기</div>
+        <div class="letter-date">2026 · 05 · 16</div>
+      </div>
+    </div>
+    <div class="env-flap" id="envFlap"></div>
+    <div class="env-seal" id="envSeal">💌</div>
+
+    <!-- 信封正面文字 -->
+    <div style="
+      position: absolute;
+      top: 22px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      text-align: center;
+      pointer-events: none;
+      width: 100%;
+    ">
+      <div style="
+        font-family: 'Noto Serif SC', serif;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 6px;
+        color: #8B3A3A;
+        margin-bottom: 4px;
+      ">婚礼邀请</div>
+      <div style="
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 3px;
+        color: #8B3A3A;
+        margin-bottom: 2px;
+        font-style: italic;
+      ">Wedding Invitation</div>
+      <div style="
+        font-family: 'Noto Serif KR', serif;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: #8B3A3A;
+        margin-bottom: 10px;
+      ">청첩장</div>
+      <div style="
+        font-family: 'Great Vibes', cursive;
+        font-size: 26px;
+        color: #3A2E2E;
+        line-height: 1.3;
+      ">Rain × Seulki</div>
+      <div style="
+        font-size: 10px;
+        letter-spacing: 2px;
+        color: #8FA39A;
+        margin-top: 4px;
+        font-family: 'Cormorant Garamond', serif;
+      ">邓雨 · 김슬기</div>
+    </div>
+  </div>
+
+  <div class="env-hint">点击信封开启 · 봉투를 클릭하세요 · Click to Open 💌</div>
+</div>
+
+</body>
+</html>
